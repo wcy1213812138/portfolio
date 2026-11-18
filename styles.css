@@ -136,3 +136,17 @@ footer span{font-family:var(--mono);font-size:.7rem;color:var(--fg-3)}
   .sec-desc{display:none}
   .hero-foot{gap:20px 28px}
 }
+
+/* 叙述型排版（替代卡片式样） */
+.work-meta{margin:18px 0 0;font-family:var(--mono);font-size:.72rem;color:var(--fg-3);
+  letter-spacing:.03em;line-height:1.7}
+.work-desc + .work-desc{margin-top:.9em}
+.about-cols{display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(28px,4vw,56px)}
+.about-body{margin:.7em 0 0;color:var(--fg-2);font-size:.94rem;max-width:62ch;line-height:1.75}
+.plain-list{list-style:none;margin:14px 0 0;padding:0;display:grid;gap:10px}
+.plain-list li{color:var(--fg-2);font-size:.92rem;line-height:1.7;padding-left:16px;position:relative}
+.plain-list li::before{content:'·';position:absolute;left:2px;color:var(--fg-3)}
+.hero-title{font-weight:400;letter-spacing:-.02em}
+@media (min-width:900px){
+  .about-cols{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
+}

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>吴辰宇 · Game Client Developer</title>
-<meta name="description" content="吴辰宇 — 游戏客户端 / 玩法程序。UE C++ RTS、纯蓝图玩法、无引擎 C++ 规则实现。">
+<title>吴辰宇 · 游戏客户端</title>
+<meta name="description" content="吴辰宇，中国传媒大学数字媒体技术。三个项目：UE5 C++ RTS、纯蓝图俄罗斯方块、控制台文字 RPG。">
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0b'/%3E%3Crect x='22' y='22' width='20' height='20' fill='%23f0643a'/%3E%3C/svg%3E">
 </head>
@@ -14,13 +14,12 @@
   <div class="container">
     <a class="brand" href="#top">
       <span class="brand-name">吴辰宇</span>
-      <span class="brand-role">Wu Chenyu — Game Client</span>
+      <span class="brand-role">游戏客户端</span>
     </a>
     <nav class="nav">
-      <a href="#work">作品</a>
+      <a href="#work">项目</a>
       <a href="#about">关于</a>
-      <a href="#method">方法</a>
-      <a href="#index">证据</a>
+      <a href="#data">数据</a>
       <a href="#contact">联系</a>
     </nav>
   </div>
@@ -30,21 +29,20 @@
 
   <section class="hero">
     <div class="container">
-      <p class="label"><span class="dot"></span>Game Client · Gameplay · Unreal C++</p>
+      <p class="label"><span class="dot"></span>中国传媒大学 · 数字媒体技术 · 2028 届</p>
       <h1 class="hero-title">
-        把玩法规则<br>
-        <span class="dim">做成可验证、</span><br>
-        可复现的系统。
+        写玩法，<br>
+        <span class="dim">也写能把它验一遍的东西。</span>
       </h1>
       <p class="hero-lead">
-        我是吴辰宇，中国传媒大学数字媒体技术 2024–2028。求职游戏客户端（战斗 / 玩法方向）。
-        做法是先定验收标准，再把系统拆成能自动测的部分：规则与引擎分离，表现留在引擎里。
+        我是吴辰宇，求职游戏客户端，战斗和玩法方向。
+        三个项目都是自己想做完整才写的：一个 UE5 的 RTS、一个不用 C++ 的俄罗斯方块、一个控制台文字 RPG。
+        我习惯在动代码之前先想清楚"改完怎么知道它没坏"，所以这些项目里多多少少都留了能自动跑的断言。
       </p>
       <div class="hero-foot">
-        <div><b>27,139</b><span>RTS C++ 行数 / 199 文件</span></div>
-        <div><b>89</b><span>自动化用例</span></div>
-        <div><b>3</b><span>可演示项目</span></div>
-        <div><b>0</b><span>未验证就写进简历的条目</span></div>
+        <div><b>27,139</b><span>RTS 的 C++ 行数</span></div>
+        <div><b>89</b><span>其中自动化断言</span></div>
+        <div><b>3</b><span>能跑起来的项目</span></div>
       </div>
     </div>
   </section>
@@ -52,9 +50,9 @@
   <section id="work">
     <div class="container">
       <div class="sec-head">
-        <span class="sec-no">(01)</span>
-        <h2 class="sec-title">精选项目</h2>
-        <p class="sec-desc">三个项目分别验证：引擎内系统实现、引擎原生能力、脱离引擎的规则可测性。</p>
+        <span class="sec-no">01</span>
+        <h2 class="sec-title">三个项目</h2>
+        <p class="sec-desc">按写的顺序排，问题也是按当时卡住的顺序写。</p>
       </div>
 
       <div class="work-list">
@@ -64,23 +62,20 @@
             <span class="work-no">01</span>
             <div class="work-main">
               <h3 class="work-title">边境战役</h3>
-              <p class="work-tech">UE 5.8 · 自研 RTS 框架 · 纯 C++ · 不使用 GAS</p>
-              <p class="work-desc">建造 → 采集 → 生产 → 编队移动 → 交战 → 十回合战役 → 存档恢复的完整闭环。
-              实现重心不在“能不能打”，而在几十个单位同时被下令后如何不互相挡住、不乱站位。</p>
-              <ul class="points">
-                <li>阵位按目标点、人数、最大单位半径生成矩形阵位；16 剑士为 4×4，中心间距 144 cm。</li>
-                <li>混编以 <code>BalanceId</code> 区分兵种，先排同兵种整行再集中余数，不设近战/远程前后优先，不依赖框选顺序。</li>
-                <li>只预先标记每排兵种配额，个体进入矩形后才领取唯一坐标；领位矩形外扩半间距 + 入口缓冲，避免 Crowd 把晚到单位挡在边界外。</li>
-                <li>对照 OpenRA 固定提交源码后，改掉“一律重新寻路”的做法：先通知挡路单位让路，空闲单位自己挪开。</li>
-                <li>十回合战役保留部队与经济；存档用紧凑坐标编码并做版本迁移；敌方按“可支付”出价而非定时刷兵。</li>
-              </ul>
-              <div class="kv">
-                <span class="chip">199 文件</span>
-                <span class="chip">27,139 行</span>
-                <span class="chip">58 测试文件</span>
-                <span class="chip">89 用例</span>
-                <span class="chip">DetourCrowd</span>
-              </div>
+              <p class="work-tech">UE 5.8 · 纯 C++ · 自研 RTS 框架 · 没有用 GAS</p>
+              <p class="work-desc">
+                一开始我给每个单位一个目标点，让它自己走过去。十六个剑士一起下令的时候，问题立刻出来：
+                它们互相挡，最后两三个人永远停在阵型外面，我怎么调避让参数都没用。
+                后来换了个做法——先算一块矩形阵位（十六人就是 4×4，中心间距 144 cm），
+                单位走到附近才能领一个位置，混编按兵种分排，领位区比最外圈再外扩半个间距，
+                这样 Crowd 不会把晚到的单位推到边界外。这块花的时间最多，也是我唯一写了成组断言的部分。
+              </p>
+              <p class="work-desc">
+                挡路还有一件事：我原先一撞到人就算重新寻路，路径一直被打断。读了 OpenRA 的源码之后才知道
+                它的顺序是先通知挡路的单位让路，空闲的单位自己挪开，等不到才重算。我照着改，抖动少了很多。
+                十回合战役、采集生产、紧凑坐标存档这些是后面补的，敌方按"付得起才出兵"走，不是定时刷。
+              </p>
+              <p class="work-meta">199 文件 · 27,139 行 · 58 个测试文件 · 89 条用例</p>
             </div>
           </div>
         </article>
@@ -90,26 +85,23 @@
             <span class="work-no">02</span>
             <div class="work-main">
               <h3 class="work-title">俄罗斯方块 3D</h3>
-              <p class="work-tech">UE 5.8 · 纯蓝图 · 零 C++ · 无运行期插件依赖</p>
-              <p class="work-desc">只用引擎原生能力，把规则、数据、表现、UI 四层全部落在蓝图里：规则不靠堆代码绕过引擎，
-              而是靠数据表与清晰的蓝图边界。</p>
-              <ul class="points">
-                <li>七种方块由数据表驱动，新增形状不改逻辑。</li>
-                <li>下落、旋转合法性（撞墙 / 撞块回退）、硬降、锁定、消行、计分与下落加速。</li>
-                <li>菜单 → 开局 → 暂停 → 结束，三套 UMG 互不耦合。</li>
-                <li>项目后期混进模板资源，用依赖闭包 + 反向引用者判断而非文件名，删前做 860 文件逐文件 SHA-256 校验的备份。</li>
-              </ul>
-              <div class="kv">
-                <span class="chip">4 蓝图</span>
-                <span class="chip">3 UMG</span>
-                <span class="chip">2 数据资产</span>
-                <span class="chip">3 材质</span>
-              </div>
+              <p class="work-tech">UE 5.8 · 纯蓝图 · 没有 C++，也没有运行期插件</p>
+              <p class="work-desc">
+                这个项目的目的是逼自己不用 C++：七种方块全部放在数据表里，蓝图只管回答"能不能转""要不要消""加多少分"。
+                界面拆成菜单、暂停、HUD 三套，菜单拿不到玩法里的变量，这样加一个设置项不会牵动棋盘逻辑。
+                形状想加一种，改表就行，不用动蓝图。
+              </p>
+              <p class="work-desc">
+                后面收拾过一次：项目里混进了第三人称模板、枪械动画和一份完全无关的设计文档。
+                我没有按文件名删，而是先算主地图的依赖闭包再查反向引用，删之前把 860 个文件逐个比对哈希存了一份备份，
+                最后去掉 215 个确实用不上的资源。有几个角色资产被 Control Rig 间接引用，看着像垃圾，其实不能动，就留着了。
+              </p>
+              <p class="work-meta">4 个蓝图 · 3 套 UMG · 数据表驱动 · 清理后 6 个蓝图编译无错误</p>
             </div>
             <div class="shots">
               <a class="shot" href="assets/tetris-1.png"><img src="assets/tetris-1.png" alt="俄罗斯方块 3D 对局画面" loading="lazy"></a>
               <a class="shot" href="assets/tetris-2.png"><img src="assets/tetris-2.png" alt="俄罗斯方块 3D 运行截图" loading="lazy"></a>
-              <p class="shot-cap">Saved 视口截图 · 清理与回归后 6 个玩法/UI 蓝图编译无错误，NewMap1 PIE 启停正常</p>
+              <p class="shot-cap">对局截图。主地图 NewMap1，清理之后进 PIE 起停都正常。</p>
             </div>
           </div>
         </article>
@@ -119,20 +111,18 @@
             <span class="work-no">03</span>
             <div class="work-main">
               <h3 class="work-title">字冢</h3>
-              <p class="work-tech">标准 C++ · 控制台 · 无引擎依赖</p>
-              <p class="work-desc">1,931 行（含 395 行自测）。目标是把玩法逻辑和渲染彻底分开，证明规则本身能脱离引擎被测试。</p>
-              <ul class="points">
-                <li>共享 BFS：同一张地图上多个查询复用一次遍历结果，避免每个角色各跑一遍。</li>
-                <li>谜题参数化：谜题由数据描述，不把逻辑写死在某一关。</li>
-                <li>战斗结果与剧情分离：Combat 只产出结果，推进由 GameManager 决定，两侧可分别测试。</li>
-                <li>自测覆盖地图、寻路、存档、谜题可解性与脚本层，实跑 <code>TEST_EXIT=0</code>。</li>
-              </ul>
-              <div class="kv">
-                <span class="chip">1,931 行</span>
-                <span class="chip">395 行自测</span>
-                <span class="chip">共享 BFS</span>
-                <span class="chip">状态机</span>
-              </div>
+              <p class="work-tech">标准 C++ · 控制台 · 不依赖引擎</p>
+              <p class="work-desc">
+                用控制台不是为了省事，是想确认"规则本身能不能离开引擎被测试"。
+                玩家在文字地图上走格子、触发谜题、打一场结算式的战斗，全程没有渲染，所以规则写错会立刻暴露。
+                地图查询共用一次 BFS，不每个角色跑一遍；谜题用数据描述，不写死在某一关；
+                战斗只产出结果，剧情推进交给上层，两边可以分别测。
+              </p>
+              <p class="work-desc">
+                最后写了一份 395 行的自测，覆盖地图、寻路、存档、谜题是否可解。
+                控制台里中文会乱码，但断言是好的，跑完退出码是 0。
+              </p>
+              <p class="work-meta">1,931 行（含 395 行自测）· 共享 BFS · 文本存档</p>
             </div>
           </div>
         </article>
@@ -144,100 +134,79 @@
   <section id="about">
     <div class="container">
       <div class="sec-head">
-        <span class="sec-no">(02)</span>
+        <span class="sec-no">02</span>
         <h2 class="sec-title">关于</h2>
       </div>
-      <div class="about-grid">
-        <p class="about-lead reveal">
-          我关心的不是“能不能跑起来”，而是<em>改完之后怎么证明它没坏</em>。
-          两端都要照顾：把规则从引擎里剥出来，让它可测；把交互与手感留在引擎里，让它可玩。
-        </p>
-        <div class="reveal">
-          <p class="mono">当前方向</p>
-          <p style="color:var(--fg-2);margin:.4em 0 0">游戏客户端 · 战斗与玩法实现；技术策划与工具链作为次要方向。</p>
+      <div class="about-cols">
+        <div>
+          <p class="about-lead">
+            我做的活分两半：一半是把规则写清楚（这样它能被验），另一半是把表现留在引擎里（这样它还能玩）。
+            这两半经常打架，比如为了能测，得把东西从 Actor 里剥出来，剥得太干净手感又没了。
+          </p>
+          <p class="about-body">
+            方向是大一就定的：客户端、战斗和玩法，技术策划算次要。不打算做纯数值，也不想只做工具链。
+            课程上过的有计算机图形学、实时应用开发、游戏引擎原理这些，真正让我留着的是自己写项目的这段时间。
+          </p>
         </div>
-        <div class="reveal">
-          <p class="mono">已知短板</p>
-          <p style="color:var(--fg-2);margin:.4em 0 0">算法与网络编程的系统性训练不足；现有项目都没有联机同步、性能剖析数据与真实玩家测试。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section id="method">
-    <div class="container">
-      <div class="sec-head">
-        <span class="sec-no">(03)</span>
-        <h2 class="sec-title">方法</h2>
-        <p class="sec-desc">这些不是口号，每个项目里都能指到对应动作与记录。</p>
-      </div>
-      <div class="about-grid">
-        <div class="method-item reveal">
-          <span class="method-no">01</span>
-          <h4>验收先行</h4>
-          <p>给每个系统配一条能自动跑的断言，先界定“做完了”是什么意思，再写实现。</p>
-        </div>
-        <div class="method-item reveal">
-          <span class="method-no">02</span>
-          <h4>改前改后都留证据</h4>
-          <p>日志、测试输出、资产清单，而不是靠记忆判断“应该没坏”。</p>
-        </div>
-        <div class="method-item reveal">
-          <span class="method-no">03</span>
-          <h4>破坏性操作先备份</h4>
-          <p>备份做逐文件哈希比对，不是只看总大小一致；删除用引用关系判断，不按文件名猜。</p>
-        </div>
-        <div class="method-item reveal">
-          <span class="method-no">04</span>
-          <h4>AI 是工具，不是结论</h4>
-          <p>设计决定由我定，AI 负责实现与检索；它给出但没跑过的结论，不写进简历或作品集。</p>
+        <div>
+          <p class="about-lead">短板我也写清楚：</p>
+          <ul class="plain-list">
+            <li>算法和网络编程没有系统练过，RTS 里那些都是工程直觉加查资料。</li>
+            <li>三个项目都没做联机同步，也都没有性能数据——帧数和单位数我没量过，不敢写。</li>
+            <li>没找过真人试玩，手感全靠自己判断，这一点我知道不可靠。</li>
+          </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="index">
+  <section id="data">
     <div class="container">
       <div class="sec-head">
-        <span class="sec-no">(04)</span>
-        <h2 class="sec-title">证据索引</h2>
-        <p class="sec-desc">数字取自当前工程源码统计与测试输出；未验证内容不写。</p>
+        <span class="sec-no">03</span>
+        <h2 class="sec-title">数据和怎么查</h2>
+        <p class="sec-desc">下面的数字都是从当前工程源码里数出来的，不是估的。</p>
       </div>
+
       <table class="index-table reveal">
-        <tr><th>项目</th><th>规模</th><th>验证方式</th></tr>
-        <tr><td>边境战役</td><td>199 文件 / 27,139 行</td><td>58 测试文件 · 89 具名用例</td></tr>
-        <tr><td>俄罗斯方块 3D</td><td>蓝图资产 12 项</td><td>6 蓝图编译无错误 · NewMap1 PIE 启停</td></tr>
-        <tr><td>字冢</td><td>1,931 行（含 395 自测）</td><td>自测实跑 TEST_EXIT=0</td></tr>
+        <tr><th>项目</th><th>规模</th><th>当时怎么验的</th></tr>
+        <tr><td>边境战役</td><td>199 文件 / 27,139 行</td><td>58 个测试文件，89 条具名断言</td></tr>
+        <tr><td>俄罗斯方块 3D</td><td>蓝图资产 12 项</td><td>6 个蓝图编译无错误，主地图 PIE 起停正常</td></tr>
+        <tr><td>字冢</td><td>1,931 行（含 395 自测）</td><td>自测实跑，退出码 0</td></tr>
       </table>
 
-      <div class="code">模块分布（RTS）
+      <div class="code">RTS 模块分布
 Campaign 46 文件 / 6,356 行     Tests 58 / 9,095     Units 13 / 2,449
 UI       13 / 1,545             Economy 9 / 1,358    Orders 8 / 1,168
-Core     9 / 1,003              Combat 12 / 835      其余 9 模块 / 4,330
 
-复核（RTS 用例，本轮未整套重跑，命令留作复核）
-UnrealEditor-Cmd.exe "&lt;工程目录&gt;\rts\rts.uproject" ^
-  -ExecCmds="Automation RunTests FRTS" -TestExit="Automation Test Queue Empty" ^
-  -ReportExportPath=&lt;目录&gt; -unattended -nosplash -nullrhi
+RTS 里这几条断言最能说明阵位那块在管什么
+FRTSMixedFormationLayoutTest   混编分排
+FRTSSlotReservationTest        领位与回收
+FRTSTrafficPassTest            窄门与排队
+FRTSMoveGuideSharedVsSoloTest  共享路径 vs 单独路径
+FRTSCampaignStorageRecovery    存档坏了不崩</div>
 
-代表性用例
-FRTSMixedFormationLayoutTest · FRTSSlotReservationTest · FRTSTrafficPassTest
-FRTSMoveGuideSharedVsSoloTest · FRTSMultiWorkerTest · FRTSYieldReturnTest
-FRTSCampaignTenDayTest · FRTSCampaignStorageRecoveryTest · FRTSEnemyPaidPolicyTest</div>
+      <p class="about-body" style="margin-top:14px">
+        一句实话：整理这份页面的时候我没有把 RTS 整套测试重跑一遍，所以这里不写"全部通过"。
+        要复核的话，命令在上面那条路径下跑 <code>Automation RunTests FRTS</code> 就行。
+      </p>
     </div>
   </section>
 
   <section id="contact">
     <div class="container">
       <div class="sec-head">
-        <span class="sec-no">(05)</span>
+        <span class="sec-no">04</span>
         <h2 class="sec-title">联系</h2>
       </div>
       <div class="contact">
         <a class="contact-mail" href="mailto:3127448303@qq.com">3127448303@qq.com</a>
+        <p class="about-body" style="max-width:46ch">
+          想看更细的东西可以邮件找我，项目源码、测试输出和那份清理备份我都能翻出来。
+        </p>
         <div class="contact-links">
           <a href="assets/portfolio.pdf">作品集 PDF（8 页）</a>
-          <a href="https://github.com/wcy1213812138/portfolio">本站源码</a>
+          <a href="https://github.com/wcy1213812138/portfolio">这个页面的源码</a>
           <a href="#top">回到顶部 ↑</a>
         </div>
       </div>
@@ -246,7 +215,7 @@ FRTSCampaignTenDayTest · FRTSCampaignStorageRecoveryTest · FRTSEnemyPaidPolicy
 
   <footer class="container">
     <span>吴辰宇 · 中国传媒大学 数字媒体技术 2024–2028</span>
-    <span>页面内容以工程源码与测试输出为准</span>
+    <span>写于 2026 年 11 月</span>
   </footer>
 
 </main>
