@@ -150,3 +150,23 @@ footer span{font-family:var(--mono);font-size:.7rem;color:var(--fg-3)}
 @media (min-width:900px){
   .about-cols{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr)}
 }
+
+/* 打印 / PDF：同一份内容导出成浅色 A4 */
+@media print{
+  @page{size:A4;margin:16mm 15mm}
+  body{background:#fff;color:#14161a}
+  .site-header{display:none}
+  .hero{min-height:auto;padding:0 0 10mm}
+  .hero::before,.hero::after{display:none}
+  .label,.work-tech,.work-meta,.sec-desc,footer span{color:#5b6472}
+  .work-desc,.about-body,.plain-list li,.about-lead{color:#2a2d33}
+  .sec-no,.work-no{color:#b4451f}
+  .work-title,.sec-title,.hero-title{color:#0f1115}
+  .reveal{opacity:1!important;transform:none!important}
+  .about-cols,.work-top{grid-template-columns:1fr!important;gap:0}
+  .work-card{page-break-inside:avoid}
+  section{padding:8mm 0}
+  .shots{grid-template-columns:1fr 1fr;margin-top:6mm}
+  .shot img{max-height:52mm;object-fit:contain;background:#fff}
+  .contact-mail{color:#14161a}
+}

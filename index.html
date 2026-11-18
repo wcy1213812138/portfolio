@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>吴辰宇 · 游戏客户端</title>
-<meta name="description" content="吴辰宇，中国传媒大学数字媒体技术。三个项目：UE5 C++ RTS、纯蓝图俄罗斯方块、控制台文字 RPG。">
+<meta name="description" content="吴辰宇，中国传媒大学数字媒体技术。三个项目：UE5 RTS 的群体移动、纯蓝图的俄罗斯方块、控制台文字 RPG。">
 <link rel="stylesheet" href="styles.css">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230a0a0b'/%3E%3Crect x='22' y='22' width='20' height='20' fill='%23f0643a'/%3E%3C/svg%3E">
 </head>
@@ -18,8 +18,8 @@
     </a>
     <nav class="nav">
       <a href="#work">项目</a>
-      <a href="#about">关于</a>
-      <a href="#data">数据</a>
+      <a href="#how">思路</a>
+      <a href="#honest">不足</a>
       <a href="#contact">联系</a>
     </nav>
   </div>
@@ -31,19 +31,13 @@
     <div class="container">
       <p class="label"><span class="dot"></span>中国传媒大学 · 数字媒体技术 · 2028 届</p>
       <h1 class="hero-title">
-        写玩法，<br>
-        <span class="dim">也写能把它验一遍的东西。</span>
+        我在做两件事：<br>
+        <span class="dim">把玩法拆成能验的规则，再把它接回引擎里。</span>
       </h1>
       <p class="hero-lead">
-        我是吴辰宇，求职游戏客户端，战斗和玩法方向。
-        三个项目都是自己想做完整才写的：一个 UE5 的 RTS、一个不用 C++ 的俄罗斯方块、一个控制台文字 RPG。
-        我习惯在动代码之前先想清楚"改完怎么知道它没坏"，所以这些项目里多多少少都留了能自动跑的断言。
+        求职方向是游戏客户端，战斗和玩法。下面三个项目不是作业，
+        都是我自己觉得“这个不做完就说不清楚”才写的——所以写的顺序基本等于我依次卡住的顺序。
       </p>
-      <div class="hero-foot">
-        <div><b>27,139</b><span>RTS 的 C++ 行数</span></div>
-        <div><b>89</b><span>其中自动化断言</span></div>
-        <div><b>3</b><span>能跑起来的项目</span></div>
-      </div>
     </div>
   </section>
 
@@ -51,8 +45,7 @@
     <div class="container">
       <div class="sec-head">
         <span class="sec-no">01</span>
-        <h2 class="sec-title">三个项目</h2>
-        <p class="sec-desc">按写的顺序排，问题也是按当时卡住的顺序写。</p>
+        <h2 class="sec-title">三个项目，三个当时解不开的问题</h2>
       </div>
 
       <div class="work-list">
@@ -62,20 +55,28 @@
             <span class="work-no">01</span>
             <div class="work-main">
               <h3 class="work-title">边境战役</h3>
-              <p class="work-tech">UE 5.8 · 纯 C++ · 自研 RTS 框架 · 没有用 GAS</p>
+              <p class="work-tech">UE 5.8 · C++ · 自研 RTS · 没有用 GAS</p>
+
               <p class="work-desc">
-                一开始我给每个单位一个目标点，让它自己走过去。十六个剑士一起下令的时候，问题立刻出来：
-                它们互相挡，最后两三个人永远停在阵型外面，我怎么调避让参数都没用。
-                后来换了个做法——先算一块矩形阵位（十六人就是 4×4，中心间距 144 cm），
-                单位走到附近才能领一个位置，混编按兵种分排，领位区比最外圈再外扩半个间距，
-                这样 Crowd 不会把晚到的单位推到边界外。这块花的时间最多，也是我唯一写了成组断言的部分。
+                <b>问题：</b>最初的做法是给每个单位一个目标点，让它自己走过去。十六个剑士一起下令时立刻崩：
+                它们互相挡，最后两三个人永远停在阵型外面，怎么调避让参数都没用。
               </p>
               <p class="work-desc">
-                挡路还有一件事：我原先一撞到人就算重新寻路，路径一直被打断。读了 OpenRA 的源码之后才知道
-                它的顺序是先通知挡路的单位让路，空闲的单位自己挪开，等不到才重算。我照着改，抖动少了很多。
-                十回合战役、采集生产、紧凑坐标存档这些是后面补的，敌方按"付得起才出兵"走，不是定时刷。
+                <b>判断：</b>问题不在避让，在于我把“站位”当成了每个单位自己的事。
+                RTS 里位置其实是群体资源——所以改成先按目标点、人数、最大半径算出一块矩形阵位（十六人就是 4×4），
+                单位走到附近才领一个坐标，混编先按兵种分排再填。
               </p>
-              <p class="work-meta">199 文件 · 27,139 行 · 58 个测试文件 · 89 条用例</p>
+              <p class="work-desc">
+                <b>代价：</b>领位这套有边界情况——晚到的单位会被 Crowd 挡在阵型外。
+                于是把领位区取成最外圈再外扩半个间距，混编再加两个最大半径做入口缓冲。
+                这块也是我唯一不敢只看画面就说过关的部分，所以配了成组断言（混编分排、领位回收、窄门排队、共享路径与单独路径）。
+              </p>
+              <p class="work-desc">
+                <b>另一个修正：</b>以前一被挡住就重算路径，路径老是被打断。读了 OpenRA 的源码才发现它的顺序是
+                先通知挡路单位让路、空闲的自己挪开、等不到才重算。我照这个顺序改，抖动明显变少。
+                这件事让我后面遇到群体行为的问题，都会先去读成熟实现，而不是自己瞎调参数。
+              </p>
+              <p class="work-meta">遗留：几十个单位挤窄门时仍会有短时抖动；没做流场寻路，也没做联机同步。</p>
             </div>
           </div>
         </article>
@@ -86,22 +87,32 @@
             <div class="work-main">
               <h3 class="work-title">俄罗斯方块 3D</h3>
               <p class="work-tech">UE 5.8 · 纯蓝图 · 没有 C++，也没有运行期插件</p>
+
               <p class="work-desc">
-                这个项目的目的是逼自己不用 C++：七种方块全部放在数据表里，蓝图只管回答"能不能转""要不要消""加多少分"。
-                界面拆成菜单、暂停、HUD 三套，菜单拿不到玩法里的变量，这样加一个设置项不会牵动棋盘逻辑。
-                形状想加一种，改表就行，不用动蓝图。
+                <b>问题：</b>想做一次反向验证——不用 C++ 到底能把这个玩法做到什么程度，
+                还是写着写着就绕回代码里去了。
               </p>
               <p class="work-desc">
-                后面收拾过一次：项目里混进了第三人称模板、枪械动画和一份完全无关的设计文档。
-                我没有按文件名删，而是先算主地图的依赖闭包再查反向引用，删之前把 860 个文件逐个比对哈希存了一份备份，
-                最后去掉 215 个确实用不上的资源。有几个角色资产被 Control Rig 间接引用，看着像垃圾，其实不能动，就留着了。
+                <b>判断：</b>关键不是“能不能写出来”，而是四层要分得开。
+                形状全部放数据表，蓝图只回答“能不能转”“要不要消”“加多少分”；
+                菜单、暂停、HUD 拆成三套，菜单拿不到棋盘里的变量——加一个设置项不会牵动玩法逻辑。
+                想加一种形状改表就行。
               </p>
-              <p class="work-meta">4 个蓝图 · 3 套 UMG · 数据表驱动 · 清理后 6 个蓝图编译无错误</p>
+              <p class="work-desc">
+                <b>代价：</b>蓝图里没有类型约束，改错字段要到运行才知道，所以关键判断都收敛在少数几个函数里，不去到处散写。
+              </p>
+              <p class="work-desc">
+                <b>后来收拾过一次：</b>项目里混进了第三人称模板、枪械动画和一份完全无关的设计文档。
+                我没有按文件名删，而是先算主地图的依赖闭包、再查反向引用；删之前把全部文件逐个比对哈希存了备份。
+                有几项角色资产被 Control Rig 间接引用，看着像垃圾其实不能动，就留着了——
+                这件事之后我对“看起来没用的资源”一律先查引用。
+              </p>
+              <p class="work-meta">遗留：玩法是自己验证的，没找别人玩过，难度曲线是否合适我不知道。</p>
             </div>
             <div class="shots">
               <a class="shot" href="assets/tetris-1.png"><img src="assets/tetris-1.png" alt="俄罗斯方块 3D 对局画面" loading="lazy"></a>
               <a class="shot" href="assets/tetris-2.png"><img src="assets/tetris-2.png" alt="俄罗斯方块 3D 运行截图" loading="lazy"></a>
-              <p class="shot-cap">对局截图。主地图 NewMap1，清理之后进 PIE 起停都正常。</p>
+              <p class="shot-cap">对局截图。主地图 NewMap1，清理之后进 PIE 起停正常。</p>
             </div>
           </div>
         </article>
@@ -112,17 +123,21 @@
             <div class="work-main">
               <h3 class="work-title">字冢</h3>
               <p class="work-tech">标准 C++ · 控制台 · 不依赖引擎</p>
+
               <p class="work-desc">
-                用控制台不是为了省事，是想确认"规则本身能不能离开引擎被测试"。
-                玩家在文字地图上走格子、触发谜题、打一场结算式的战斗，全程没有渲染，所以规则写错会立刻暴露。
-                地图查询共用一次 BFS，不每个角色跑一遍；谜题用数据描述，不写死在某一关；
-                战斗只产出结果，剧情推进交给上层，两边可以分别测。
+                <b>问题：</b>前面两个项目都有同一个毛病——规则和引擎缠在一起，想验一条规则要先跑整个引擎。
+                所以我做了这个：玩家在文字地图上走格子、触发谜题、打一场结算式战斗，全程没有渲染。
               </p>
               <p class="work-desc">
-                最后写了一份 395 行的自测，覆盖地图、寻路、存档、谜题是否可解。
-                控制台里中文会乱码，但断言是好的，跑完退出码是 0。
+                <b>判断：</b>没有画面就没有借口，规则写错会立刻暴露。三处设计是刻意的：
+                地图查询共用一次 BFS，不让每个角色各跑一遍；谜题用数据描述，不写死在某一关；
+                战斗只产出结果，剧情推进交给上层——两边可以分别测。
               </p>
-              <p class="work-meta">1,931 行（含 395 行自测）· 共享 BFS · 文本存档</p>
+              <p class="work-desc">
+                <b>代价：</b>没有渲染意味着我不能靠手感兜底，所有反馈都得写清楚，写起来更啰嗦；
+                但换来的是一份自测能把地图、寻路、存档、谜题可解性都跑一遍。
+              </p>
+              <p class="work-meta">遗留：内容量很小，谜题只有几关，剧本不足以支撑更长的流程。</p>
             </div>
           </div>
         </article>
@@ -131,65 +146,58 @@
     </div>
   </section>
 
-  <section id="about">
+  <section id="how">
     <div class="container">
       <div class="sec-head">
         <span class="sec-no">02</span>
-        <h2 class="sec-title">关于</h2>
+        <h2 class="sec-title">我判断事情的方式</h2>
+        <p class="sec-desc">这几条都是被项目打出来的，不是先想好的。</p>
       </div>
       <div class="about-cols">
         <div>
           <p class="about-lead">
-            我做的活分两半：一半是把规则写清楚（这样它能被验），另一半是把表现留在引擎里（这样它还能玩）。
-            这两半经常打架，比如为了能测，得把东西从 Actor 里剥出来，剥得太干净手感又没了。
+            动手之前先问一句：改完之后，我怎么知道它没坏？答不上来就先补这一条，而不是先写功能。
           </p>
           <p class="about-body">
-            方向是大一就定的：客户端、战斗和玩法，技术策划算次要。不打算做纯数值，也不想只做工具链。
-            课程上过的有计算机图形学、实时应用开发、游戏引擎原理这些，真正让我留着的是自己写项目的这段时间。
+            这条带来一个副作用：我会不断把能测的东西从引擎里往外挪，挪得太干净手感又没了。
+            所以现在的习惯是分层——规则层尽量纯、尽量可测；表现层留在引擎里，允许它脏。
+            RTS 的阵位和字冢的谜题都走了这条路，俄罗斯方块的蓝图分层是同一个想法的另一个版本。
           </p>
         </div>
         <div>
-          <p class="about-lead">短板我也写清楚：</p>
           <ul class="plain-list">
-            <li>算法和网络编程没有系统练过，RTS 里那些都是工程直觉加查资料。</li>
-            <li>三个项目都没做联机同步，也都没有性能数据——帧数和单位数我没量过，不敢写。</li>
-            <li>没找过真人试玩，手感全靠自己判断，这一点我知道不可靠。</li>
+            <li><b>先读成熟实现，再自己调参数。</b>OpenRA 的让路顺序就是这么改掉我原来的做法的。</li>
+            <li><b>删除前只信引用关系。</b>名字像垃圾不代表是垃圾，反过来也一样。</li>
+            <li><b>拿不准的地方写小实验，不写长论证。</b>测一遍比解释十分钟快。</li>
+            <li><b>AI 用来查资料和写重复代码，但结论要自己跑过才算。</b></li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 
-  <section id="data">
+  <section id="honest">
     <div class="container">
       <div class="sec-head">
         <span class="sec-no">03</span>
-        <h2 class="sec-title">数据和怎么查</h2>
-        <p class="sec-desc">下面的数字都是从当前工程源码里数出来的，不是估的。</p>
+        <h2 class="sec-title">不足</h2>
       </div>
-
-      <table class="index-table reveal">
-        <tr><th>项目</th><th>规模</th><th>当时怎么验的</th></tr>
-        <tr><td>边境战役</td><td>199 文件 / 27,139 行</td><td>58 个测试文件，89 条具名断言</td></tr>
-        <tr><td>俄罗斯方块 3D</td><td>蓝图资产 12 项</td><td>6 个蓝图编译无错误，主地图 PIE 起停正常</td></tr>
-        <tr><td>字冢</td><td>1,931 行（含 395 自测）</td><td>自测实跑，退出码 0</td></tr>
-      </table>
-
-      <div class="code">RTS 模块分布
-Campaign 46 文件 / 6,356 行     Tests 58 / 9,095     Units 13 / 2,449
-UI       13 / 1,545             Economy 9 / 1,358    Orders 8 / 1,168
-
-RTS 里这几条断言最能说明阵位那块在管什么
-FRTSMixedFormationLayoutTest   混编分排
-FRTSSlotReservationTest        领位与回收
-FRTSTrafficPassTest            窄门与排队
-FRTSMoveGuideSharedVsSoloTest  共享路径 vs 单独路径
-FRTSCampaignStorageRecovery    存档坏了不崩</div>
-
-      <p class="about-body" style="margin-top:14px">
-        一句实话：整理这份页面的时候我没有把 RTS 整套测试重跑一遍，所以这里不写"全部通过"。
-        要复核的话，命令在上面那条路径下跑 <code>Automation RunTests FRTS</code> 就行。
-      </p>
+      <div class="about-cols">
+        <div>
+          <ul class="plain-list">
+            <li>算法和网络编程没有系统练过。RTS 里那些多半是工程直觉加查资料，遇到真难题会慢。</li>
+            <li>三个项目都没做联机同步，也没有性能数据。帧数、单位上限我没量过，所以不写。</li>
+            <li>没找过真人试玩，手感全凭自己判断，这点我知道不可靠。</li>
+            <li>内容量都偏小：字冢几关，俄罗斯方块一个模式，RTS 十回合——完成度靠机制撑着。</li>
+          </ul>
+        </div>
+        <div>
+          <p class="about-body">
+            写这些不是自谦。面试时我更怕被问“这个系统你怎么验证的”而不是“你写了多少行”，
+            因为前者我能带你看代码，后者只是数字。
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -202,10 +210,10 @@ FRTSCampaignStorageRecovery    存档坏了不崩</div>
       <div class="contact">
         <a class="contact-mail" href="mailto:3127448303@qq.com">3127448303@qq.com</a>
         <p class="about-body" style="max-width:46ch">
-          想看更细的东西可以邮件找我，项目源码、测试输出和那份清理备份我都能翻出来。
+          想看细节可以邮件找我：项目源码、当时的调试记录、那次清理的备份，我都能翻出来。
         </p>
         <div class="contact-links">
-          <a href="assets/portfolio.pdf">作品集 PDF（8 页）</a>
+          <a href="assets/portfolio.pdf">作品集 PDF</a>
           <a href="https://github.com/wcy1213812138/portfolio">这个页面的源码</a>
           <a href="#top">回到顶部 ↑</a>
         </div>
