@@ -54,19 +54,16 @@
             <span class="work-no">01</span>
             <div class="work-main">
               <h3 class="work-title">边境战役</h3>
-              <p class="work-tech">UE 5.8 · C++ · 自研 RTS · 没有用 GAS</p>
+              <p class="work-tech">UE 5.8 · C++ · 即时战略游戏</p>
               <p class="work-desc">
-                RTS 框架，围绕“几十个单位同时被下令之后不乱站、不互相卡住”来做。
-                移动按矩形阵位分配：目标点、人数、最大单位半径算出一块阵位（十六人即 4×4），
-                混编先按兵种分排再填位；单位进入阵位区才领取唯一坐标，领位区取最外圈再外扩半个间距、
-                混编另加入口缓冲。挡路不直接重算路径，按 OpenRA 的顺序先通知让路、空闲单位自己挪开、等不到才重算。
+                《边境战役》是一款使用 UE5 和 C++ 开发的即时战略游戏，包含建造、资源采集、单位生产、编队移动、战斗和存档等功能。
               </p>
               <p class="work-desc">
-                规则层与表现层分开，阵位、领位、窄门排队这些能在无头环境里成组跑断言。
-                上层是十回合战役：建造、采集、生产、部队保留、敌方按“付得起才出兵”、
-                存档用紧凑坐标编码并支持旧档迁移。
+                移动部分在 NavMesh 导航的基础上增加了编队站位和让路处理。下达移动指令后，根据目标位置、单位数量和体型生成矩形阵位，混编队伍按兵种分排。单位进入目标区域后再领取站位，减少多个单位争抢同一位置的情况。
               </p>
-              <p class="work-meta">未做：窄门处仍有短时抖动；没有流场寻路，也没有联机同步。</p>
+              <p class="work-desc">
+                战役部分负责回合推进和资源管理，存档记录部队、建筑和进度。移动、战斗、采集等功能分别放在对应模块中，方便单独调整和测试。
+              </p>
             </div>
           </div>
         </article>
@@ -76,22 +73,21 @@
             <span class="work-no">02</span>
             <div class="work-main">
               <h3 class="work-title">俄罗斯方块 3D</h3>
-              <p class="work-tech">UE 5.8 · 纯蓝图 · 没有 C++，也没有运行期插件</p>
+              <p class="work-tech">UE 5.8 · 蓝图 · UMG</p>
               <p class="work-desc">
-                用引擎原生能力做的完整玩法，四层分开：七种形状放数据表，蓝图只负责“能不能转、要不要消、加多少分”；
-                菜单、暂停、HUD 是三套独立 UMG，菜单拿不到棋盘里的变量，所以加设置项不会牵动玩法。
-                想加一种形状改表即可。
+                《俄罗斯方块 3D》是一款使用 UE5 蓝图制作的俄罗斯方块游戏，包含下落、旋转、位置检查、消行计分和暂停等功能。
               </p>
               <p class="work-desc">
-                项目后期混进过第三人称模板和无头文档，清理时按依赖闭包与反向引用判断，不按文件名；
-                删除前对全部文件做逐文件哈希备份。有几项角色资产被 Control Rig 间接引用，看似无关但必须保留。
+                方块形状通过数据表配置，棋盘管理蓝图处理方块生成、位置判断和消行。将形状数据与规则分开，便于查看和调整不同方块的配置。
               </p>
-              <p class="work-meta">未做：只有一个模式，难度曲线没有经过他人验证。</p>
+              <p class="work-desc">
+                界面使用 UMG 制作，分为主菜单、暂停菜单和分数 HUD，分别负责进入游戏、暂停操作和分数显示。
+              </p>
             </div>
             <div class="shots">
               <a class="shot" href="assets/tetris-1.png"><img src="assets/tetris-1.png" alt="俄罗斯方块 3D 对局画面" loading="lazy"></a>
               <a class="shot" href="assets/tetris-2.png"><img src="assets/tetris-2.png" alt="俄罗斯方块 3D 运行截图" loading="lazy"></a>
-              <p class="shot-cap">主地图 NewMap1，清理后进 PIE 起停正常。</p>
+              <p class="shot-cap">《俄罗斯方块 3D》运行画面。</p>
             </div>
           </div>
         </article>
@@ -101,14 +97,16 @@
             <span class="work-no">03</span>
             <div class="work-main">
               <h3 class="work-title">字冢</h3>
-              <p class="work-tech">标准 C++ · 控制台 · 不依赖引擎</p>
+              <p class="work-tech">C++ · 控制台文字 RPG</p>
               <p class="work-desc">
-                文字地图上的走格子、谜题与结算式战斗，全程无渲染，规则本身可离线验证。
-                地图查询共用一次 BFS，不每个角色各跑一遍；谜题由数据描述，不写死在某一关；
-                战斗只产出结果，剧情推进交给上层，两部分可以分别测。
-                自测覆盖地图、寻路、存档与谜题可解性。
+                《字冢》是一款使用 C++ 开发的控制台文字 RPG，包含地图探索、谜题、战斗和存档。通过文字显示场景和角色状态，玩家使用键盘操作。
               </p>
-              <p class="work-meta">未做：内容量偏小，谜题只有几关。</p>
+              <p class="work-desc">
+                地图寻路使用 BFS，谜题通过参数配置。战斗模块返回结算结果，主流程根据结果继续推进，避免将战斗规则和剧情写在一起。
+              </p>
+              <p class="work-desc">
+                项目按地图、寻路、战斗、谜题和存档划分模块，并编写了相关自测，用于检查地图连通性、存档读写和谜题可解性。
+              </p>
             </div>
           </div>
         </article>
@@ -127,7 +125,7 @@
         <a class="contact-mail" href="mailto:3127448303@qq.com">3127448303@qq.com</a>
         <div class="contact-links">
           <a href="assets/portfolio.pdf">作品集 PDF</a>
-          <a href="https://github.com/wcy1213812138/portfolio">这个页面的源码</a>
+          <a href="https://github.com/wcy1213812138/portfolio">网站源码</a>
           <a href="#top">回到顶部 ↑</a>
         </div>
       </div>
@@ -136,7 +134,7 @@
 
   <footer class="container">
     <span>吴辰宇 · 中国传媒大学 数字媒体技术 2024–2028</span>
-    <span>v4 · 2026-11-18</span>
+    <span>v5 · 2026-11-18</span>
   </footer>
 
 </main>
