@@ -231,3 +231,13 @@ footer span{font-family:var(--mono);font-size:.7rem;color:var(--fg-3)}
 .tetris-shots .shot:hover img{transform:none}
 .tetris-shots .shot-cap{margin:0}
 @media print{.work-card .tetris-shots{grid-template-columns:72mm;margin-top:5mm}.work-card .tetris-shots .shot img{max-height:101mm}}
+
+/* 字冢终端截图 */
+.wenzi-gallery{display:grid;grid-template-columns:minmax(0,234px) minmax(0,526px);gap:24px;margin-top:28px;align-items:start}
+.wenzi-gallery figure{margin:0;min-width:0}
+.wenzi-gallery .shot{display:block;width:100%}
+.wenzi-gallery img{width:100%;height:auto;object-fit:contain}
+.wenzi-gallery .shot:hover img{transform:none}
+.wenzi-gallery figcaption{margin-top:10px;font-size:.78rem;line-height:1.6;color:var(--fg-2)}
+@media(max-width:640px){.wenzi-gallery{grid-template-columns:minmax(0,1fr)}.wenzi-gallery figure:first-child{max-width:234px}.wenzi-gallery figure:last-child{max-width:526px}}
+@media print{.wenzi-gallery{grid-template-columns:49mm minmax(0,1fr);gap:5mm;margin-top:6mm}.wenzi-gallery figcaption{font-size:8pt}.work-card .wenzi-gallery .shot img{max-height:none}}
