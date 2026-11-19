@@ -55,12 +55,26 @@
             <div class="work-main">
               <h3 class="work-title">边境战役</h3>
               <p class="work-tech">UE 5.8 · C++ · 即时战略游戏</p>
+              <figure class="rts-overview">
+                <a class="shot" href="assets/rts-overview.png"><img src="assets/rts-overview.png" width="1746" height="779" alt="边境战役完整对局画面，包含基地、资源点和操作界面"></a>
+                <figcaption>基地与周边资源点，包含资源、人口、小地图和建筑操作界面。</figcaption>
+              </figure>
               <p class="work-desc">
                 《边境战役》是一款使用 UE5 和 C++ 开发的即时战略游戏，包含建造、资源采集、单位生产、编队移动、战斗和存档等功能。
               </p>
               <p class="work-desc">
                 移动部分在 NavMesh 导航的基础上增加了编队站位和让路处理。下达移动指令后，根据目标位置、单位数量和体型生成矩形阵位，混编队伍按兵种分排。单位进入目标区域后再领取站位，减少多个单位争抢同一位置的情况。
               </p>
+              <div class="rts-comparison">
+                <figure>
+                  <a class="shot" href="assets/rts-movement.png"><img src="assets/rts-movement.png" width="917" height="378" alt="剑士、长矛兵、轻步兵与工人向同一目标移动" loading="lazy"></a>
+                  <figcaption>混编单位向同一目标移动</figcaption>
+                </figure>
+                <figure>
+                  <a class="shot" href="assets/rts-arrival.png"><img src="assets/rts-arrival.png" width="596" height="623" alt="混编单位到达目标后的站位" loading="lazy"></a>
+                  <figcaption>到达目标后的站位</figcaption>
+                </figure>
+              </div>
               <p class="work-desc">
                 战役部分负责回合推进和资源管理，存档记录部队、建筑和进度。移动、战斗、采集等功能分别放在对应模块中，方便单独调整和测试。
               </p>
@@ -134,7 +148,7 @@
 
   <footer class="container">
     <span>吴辰宇 · 中国传媒大学 数字媒体技术 2024–2028</span>
-    <span>v5 · 2026-11-18</span>
+    <span>v6 · 2026-11-19</span>
   </footer>
 
 </main>

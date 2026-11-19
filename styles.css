@@ -126,7 +126,7 @@ footer span{font-family:var(--mono);font-size:.7rem;color:var(--fg-3)}
 @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}}
 
 @media (min-width:900px){
-  .work-top{grid-template-columns:auto minmax(0,1fr) minmax(0,5fr);column-gap:clamp(16px,3vw,40px)}
+  .work-top{grid-template-columns:auto minmax(0,1fr) minmax(0,1fr);column-gap:clamp(16px,3vw,40px)}
   .work-no{grid-column:1}
   .work-main{grid-column:2}
   .work-card .shots{grid-column:3;grid-row:1;align-self:start;grid-template-columns:1fr;margin-top:0}
@@ -179,4 +179,49 @@ footer span{font-family:var(--mono);font-size:.7rem;color:var(--fg-3)}
 @media print{
   .hero-intro p{color:#2a2d33}
   .hero-skills{color:#5b6472}
+}
+
+/* RTS 画面：保留原图比例，可点击查看原图 */
+.work-top:not(:has(> .shots)) > .work-main{grid-column:2/-1}
+.rts-overview{margin:24px 0}
+.rts-overview .shot{display:block}
+.rts-overview img{height:auto;object-fit:contain}
+.rts-comparison{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:24px 0}
+.rts-comparison figure{margin:0;min-width:0}
+.rts-comparison .shot{display:flex;align-items:center;justify-content:center;height:340px}
+.rts-comparison img{width:100%;height:100%;object-fit:contain}
+.rts-overview figcaption,.rts-comparison figcaption{margin-top:10px;font-size:.78rem;color:var(--fg-2);line-height:1.6}
+.rts-overview .shot:hover img,.rts-comparison .shot:hover img{transform:none}
+@media(max-width:640px){
+  .rts-overview,.rts-comparison{margin-left:0;margin-right:0}
+  .rts-comparison{grid-template-columns:1fr}
+  .rts-comparison .shot{height:auto;min-height:0}
+  .rts-comparison img{height:auto;max-height:420px}
+}
+@media print{
+  :root{--fg-2:#2a2d33;--fg-3:#5b6472;--line:#ddd;--bg-2:#fff;--gutter:0px}
+  .container{padding:0}
+  .hero-title{font-size:32pt}
+  .hero{padding-bottom:0}
+  .hero-title .dim{color:#5b6472}
+  #work>.container>.sec-head{display:none}
+  .work-list{display:block}
+  .work-card{display:block;break-before:page;break-inside:avoid;padding-top:0;border:0}
+  .work-top{display:block}
+  .work-no{display:block;margin-bottom:3mm}
+  .work-title{font-size:24pt}
+  .work-desc{font-size:10pt;line-height:1.6;max-width:none;margin-top:3mm}
+  .work-tech{font-size:9pt}
+  .rts-overview{margin:4mm 0}
+  .rts-overview img{max-height:74mm;width:100%;object-fit:contain}
+  .rts-comparison{margin:4mm 0;gap:4mm;grid-template-columns:1fr 1fr}
+  .rts-comparison .shot{height:51mm}
+  .rts-overview figcaption,.rts-comparison figcaption{font-size:8pt;margin-top:2mm}
+  .work-card .shots{display:grid;grid-template-columns:1fr 1fr;margin-top:6mm}
+  .work-card .shot img{max-height:70mm;object-fit:contain}
+  #contact{padding:6mm 0}
+  #contact .sec-head{margin-bottom:4mm}
+  .contact{gap:4mm}
+  .contact-links{padding-top:3mm}
+  footer{padding-top:5mm;padding-bottom:0}
 }
