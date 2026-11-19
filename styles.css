@@ -225,3 +225,9 @@ footer span{font-family:var(--mono);font-size:.7rem;color:var(--fg-3)}
   .contact-links{padding-top:3mm}
   footer{padding-top:5mm;padding-bottom:0}
 }
+/* Tetris gameplay */
+.work-card .tetris-shots{grid-template-columns:minmax(0,340px);justify-content:center;margin-top:0}
+.tetris-shots .shot img{width:100%;height:auto;object-fit:contain}
+.tetris-shots .shot:hover img{transform:none}
+.tetris-shots .shot-cap{margin:0}
+@media print{.work-card .tetris-shots{grid-template-columns:72mm;margin-top:5mm}.work-card .tetris-shots .shot img{max-height:101mm}}
